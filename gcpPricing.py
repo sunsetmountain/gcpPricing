@@ -32,7 +32,8 @@ def main():
         downloadSKUFile(token, i['serviceId'], i['displayName'], jsonDirectory)
         sku_df = processSKUFile(i['serviceId'], i['displayName'], jsonDirectory, pricingDirectory)
         df_list = [merged_df, sku_df]
-        merged_df = pd.concat(df_list).drop_duplicates()
+        #merged_df = pd.concat(df_list)
+        merged_df = merged_df.merge(sku_df, how='outer')
         time.sleep(random.randint(12,15))
 
     writeMergedSKUFile(merged_df, rootDirectory)
